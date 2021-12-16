@@ -1,0 +1,85 @@
+﻿@model MusicInShop.Web.Models.NavbarModel
+@{
+	decimal totalPrice = 0;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+	<div class="row">
+
+		<div class="col-12">
+			<!-- Cart Table -->
+			<div class="cart-table table-responsive mb-30">
+				<span><img src="~/Content/img/white.png" alt="" height="40"></span>
+				@if (Model.User.CartProducts.Count() > 0)
+				{
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="pro-thumbnail">Фото</th>
+								<th class="pro-title">Товар</th>
+								<th class="pro-price">Цена</th>
+								<th class="pro-quantity">Количество</th>
+								<th class="pro-subtotal">Всего</th>
+								<th class="pro-remove">Удалить</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var cartProduct in Model.User.CartProducts)
+							{
+								var product = cartProduct.Key;
+								var productUrl = Url.Action("Product", "Shop", new { id = product.Id });
+								var price = product.Price * (100 - product.Discount) / 100;
+								totalPrice += price * cartProduct.Value;
+								<tr>
+									<td class="pro-thumbnail">
+										<a href="@productUrl">
+											<img src="@string.Format($"/Content/img/portfolio/{product.Id}.jpg")" class="img-responsive" alt="Product">
+										</a>
+									</td>
+									<td class="pro-title"><a href="@productUrl">@product.Name</a></td>
+									<td class="pro-price"><span>@string.Format("${0:0.00}", price)</span></td>
+									<td class="pro-quantity">
+										<div class="pro-qty">
+											@Html.Raw(Ajax.ActionLink("LinkTextToken", "DecrementFromCart", new { id = product.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "cart" }).ToHtmlString().Replace("LinkTextToken", "<button class=\"dec qtybtn\">-</button>"))
+											<span style="margin-top:7px">@cartProduct.Value</span>
+											@Html.Raw(Ajax.ActionLink("LinkTextToken", "IncrementToCart", new { id = product.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "cart" }).ToHtmlString().Replace("LinkTextToken", "<button class=\"inc qtybtn\">+</button>"))
+										</div>
+									</td>
+									<td class="pro-subtotal"><span>@string.Format("${0:0.00}", price * cartProduct.Value)</span></td>
+
+									<td class="pro-remove">
+										@Html.Raw(Ajax.ActionLink("LinkTextToken", "RemoveFromCart", new { id = product.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "cart" }).ToHtmlString().Replace("LinkTextToken", "<i class=\"fa fa-trash-o\"></i>"))
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<span><img src="~/Content/img/white.png" alt="" height="40"></span>
+					<h1>Корзина пуста</h1>
+				}
+			</div>
+
+			<div class="row">
+				<!-- Cart Summary -->
+				<div class="col-lg-6 col-12 mb-30 d-flex">
+					<div class="cart-summary">
+						<div class="cart-summary-wrap">
+							<h4>Сумма</h4>
+							<h2>Total <span>@string.Format("${0:0.00}", totalPrice)</span></h2>
+						</div>
+						<div class="cart-summary-button">
+							<button class="btn">Подтвердить</button>
+							<span><img src="~/Content/img/white.png" alt="" height="160"></span>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>

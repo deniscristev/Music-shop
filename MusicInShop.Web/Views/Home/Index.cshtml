@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="headerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <h3 class="mystylew">Лучший магазин музыкальных инструментов </h3>
+                <h1>MUSICSHOP</h1>
+                <h3 class="mystylew">Мы открылись!</h3>
+            </div>
+        </div>
+    </div>
+    <!-- /container -->
+</div>
+
+
+    <section id="works"></section>
+
+    <div class="container">
+        <div class="row centered mt mb">
+            <h1>В нашем магазине</h1>
+         
+
+                <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                    <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka1.jpg")" class="img-responsive"></a>
+
+                </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka2.jpg")" class="img-responsive"></a>
+               
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka3.jpg")" class="img-responsive"></a>
+                
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka4.jpg")" class="img-responsive"></a>
+              
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka5.jpg")" class="img-responsive"></a>
+                
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 gallery">
+                <a href="@Url.Action("Index","Shop")"><img src="@string.Format($"/Content/img/portfolio/fotka6.jpg")" class="img-responsive"></a>
+                
+            </div>
+           
+        </div>
+    </div>

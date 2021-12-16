@@ -1,0 +1,67 @@
+﻿@model MusicInShop.Web.Models.ProductPageModel
+
+@{
+	ViewBag.Title = Model.Product.Name;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="single-product-section section pt-60 pt-lg-40 pt-md-30 pt-sm-20 pt-xs-25 pb-100 pb-lg-80 pb-md-70 pb-sm-30 pb-xs-20">
+	<div class="container">
+		<span><img src="~/Content/img/white.png" alt="" height="70"></span>
+		<div class="row">
+			<div class="col-12">
+				<div class="shop-area">
+					<div class="row">
+						<div class="col-md-6 pr-35 pr-lg-15 pr-md-15 pr-sm-15 pr-xs-15">
+							<!-- Product Details Left -->
+							<div class="product-details-left">
+								<div class="product-details-images">
+									<div class="lg-image">
+										<img src="@string.Format($"/Content/img/portfolio/{Model.Product.Id}.jpg")" alt="">
+
+									</div>
+								</div>
+
+							</div>
+							<!--Product Details Left -->
+						</div>
+						<div class="col-md-6">
+							<!--Product Details Content Start-->
+                            <div class="product-details-content">
+
+                                <h2>@Model.Product.Name</h2>
+                                <span><img src="~/Content/img/white.png" alt="" height="30"></span>
+                                <h4>@Model.Product.Description</h4>
+                                <span><img src="~/Content/img/white.png" alt="" height="50"></span>
+                                <div class="single-product-price">
+                                    <span class="price new-price">@string.Format("${0:0.00}", Model.Product.Price * (100 - Model.Product.Discount) / 100)</span>
+
+                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+
+                                    <div class="single-product-quantity">
+                                        @using (Ajax.BeginForm("AddToCart", "Shop", new { id = Model.Product.Id }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "empty" }, new
+                                        {
+                                            @class = "add-quantity"
+                                        }))
+                                        {
+                                            <div class="product-quantity">
+                                                <input value="1" type="number" name="quantity">
+                                            </div>
+                                            <div class="add-to-link">
+                                                <button class="btn"><i class="fa fa-shopping-bag"></i>Добавить в корзину</button>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

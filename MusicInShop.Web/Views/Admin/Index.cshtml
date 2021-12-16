@@ -1,0 +1,57 @@
+﻿@model MusicInShop.Web.Models.AdminPageModel
+
+@{
+	ViewBag.Title = "Admin Panel";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span><img src="~/Content/img/white.png" alt="" height="80"></span>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-lg-offset-3">
+					<h2>Панель администратора</h2>
+				</div>
+			</div>
+		</div>
+<p class="onemoremy">
+	@Html.ActionLink("Добавить продукт", "AddProduct")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			Название
+		</th>
+		<th>
+			Цена
+		</th>
+		<th>
+			Скидка
+		</th>
+		<th>
+			Картинка
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model.Products)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Price)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Discount)
+			</td>
+			<td>
+				<img src="@string.Format($"/Content/img/portfolio/{item.Id}.jpg")" class="img-responsive" width=" 250">
+			</td>
+			<td>
+				@Html.ActionLink("Удалить", "DeleteProduct", new { id = item.Id })
+			</td>
+		</tr>
+	}
+
+</table>

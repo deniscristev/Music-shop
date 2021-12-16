@@ -1,0 +1,138 @@
+﻿@model MusicInShop.Web.Models.ShopModel
+@{
+    ViewBag.Title = "Магазин";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shop-section section pt-60 pt-lg-40 pt-md-30 pt-sm-20 pt-xs-30  pb-70 pb-lg-50 pb-md-40 pb-sm-20 pb-xs-20">
+    <span><img src="~/Content/img/white.png" alt="" height="45"></span>
+    <h2 align="center">Клавишные</h2>
+    <span><img src="~/Content/img/white.png" alt="" height="30"></span>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="shop-area">
+
+                    @{
+
+                        var products = Model.Products;
+                        var count = products.Count();
+                        var count1 = 0;
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            var product1 = products.ElementAt(i);
+                            if (product1.Category == "Keyboard")
+                            {
+                                count1++;
+                            }
+
+                        }
+
+                        var rows = count1 / 4;
+                        if (rows * 4 != count1)
+                        {
+                            rows++;
+                        }
+
+
+                        var k = 0;
+                        var m = 0;
+                        var n = 1;
+
+                        for (int i = 0; i < rows; i++)
+                        {
+                            if (m != 0) { m++; }
+                            if (n != 1) { n++; }
+                            k = 0;
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="shop-product">
+                                                <div id="myTabContent-2" class="tab-content">
+                                                    <div id="grid" class="tab-pane fade active show">
+                                                        <div class="product-grid-view">
+                                                            <div class="row">
+
+                                                                @for (int j = m; j < n && j < count; j++)
+                                                                {
+                                                                    var product = products.ElementAt(j);
+                                                                    var productUrl = Url.Action("Product", "Shop", new { id = product.Id });
+                                                                    if (product.Category == "Keyboard")
+                                                                    {
+                                                                        k++;
+                                                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                                                            <!--  Single Grid product Start -->
+                                                                            <div class="single-grid-product mb-40">
+                                                                                <div class="product-image">
+                                                                                    <div class="product-label">
+                                                                                        @if (product.Discount > 0)
+                                                                                        {
+                                                                                            <span>@string.Format($"-{product.Discount}%")</span>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <a href="@productUrl">
+                                                                                        <img src="@string.Format($"/Content/img/portfolio/{product.Id}.jpg")" alt="">
+                                                                                    </a>
+
+                                                                                    <div class="product-action">
+                                                                                        <ul>
+                                                                                            @if (User.Identity.IsAuthenticated && Model.User.Role == "user")
+                                                                                            {
+                                                                                                <li>
+                                                                                                    @Html.Raw(Ajax.ActionLink(
+                                                                                             "LinkTextToken",
+                                                                                             "AddToCart", new { id = product.Id },
+                                                                                             new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "empty" }
+                                                                                             ).ToHtmlString().Replace("LinkTextToken", "<i class=\"fa fa-cart-plus\"></i>"))
+                                                                                                </li>
+                                                                                            }
+                                                                                            <li><a href="#quick-view-modal-container" data-toggle="modal" title="Quick View"><i class="fa fa-eye"></i></a></li>
+                                                                                            @*<li><a href="wishlit.html"><i class="fa fa-heart-o"></i></a></li>*@
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="product-content">
+                                                                                    <h3 class="title"> <a href="@productUrl">@product.Name</a></h3>
+                                                                                    <p class="product-price">
+                                                                                        <span class="discounted-price">@string.Format("${0:0.00}", product.Price * (100 - product.Discount) / 100)</span>
+                                                                                        @if (product.Discount > 0)
+                                                                                        {
+                                                                                            <span class="main-price discounted">$@product.Price</span>
+                                                                                        }
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--  Single Grid product End -->
+                                                                        </div>
+                                                                    }
+                                                                    if (k != 0 && k % 4 == 0)
+                                                                    {
+                                                                        m = j;
+                                                                    }
+                                                                    else { n++; }
+
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-30 mb-sm-40 mb-xs-30">
+
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

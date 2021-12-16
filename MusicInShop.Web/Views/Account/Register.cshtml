@@ -1,0 +1,55 @@
+﻿@model MusicInShop.Web.Models.RegisterModel
+@{
+	ViewBag.Title = "Register";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-register-section section pt-90 pt-lg-70 pt-md-60 pt-sm-55 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-6">
+				<div class="customer-login-register register-pt-0">
+					<div class="form-register-title">
+						<span><img src="~/Content/img/white.png" alt="" height="30"></span>
+						<h2>Регистрация</h2>
+					</div>
+					<div class="register-form">
+						@using (Html.BeginForm("Register", "Account"))
+						{
+							@Html.AntiForgeryToken()
+							<div class="form-fild">
+								<p><label>Email<span class="required">*</span></label></p>
+								@Html.EditorFor(model => model.Email, new { htmlAttributes = new { type = "text" } })
+								@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+							</div>
+							<h2></h2>
+							<div class="form-fild">
+								<p><label>Nickname<span class="required">*</span></label></p>
+								@Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { type = "text" } })
+								@Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
+							</div>
+							<h2></h2>
+							<div class="form-fild">
+								<p><label>Пароль <span class="required">*</span></label></p>
+								@Html.EditorFor(model => model.Password, new { htmlAttributes = new { type = "password" } })
+								@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+							</div>
+							<h2></h2>
+							<div class="form-fild">
+								<p><label>Подтвердите пароль <span class="required">*</span></label></p>
+								@Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { type = "password" } })
+								@Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+							</div>
+							<h2></h2>
+
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+							<div class="register-submit">
+								<button type="submit" class="btn">Регистрация</button>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
